@@ -1,0 +1,59 @@
+---
+title: "typistR: simple R interfaces to celltypist python library"
+shorttitle: "interop with python for cell types"
+author: "Vincent J. Carey, stvjc at channing.harvard.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{typistR: simple R interfaces to celltypist python library}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Introduction
+
+celltypist is a python library with model weights for 53 different
+tissue or disease or developmental contexts for cell type classification
+based on RNA-seq experiments.  The purpose of this package
+is to demonstrate very lightweight interfacing to accomplish
+tool reuse in R/Bioconductor.
+
+# Setup and overview
+
+Prior to adoption in Bioconductor,
+install the package with devtools:
+```{r doinst,eval=FALSE}
+devtools::install_github("vjcitn/typistR")
+```
+
+An overview of available prediction contexts is:
+
+```{r do1,message=FALSE}
+library(typistR)
+library(DT)
+ctm = ct_models()
+DT::datatable(ctm)
+```
+
+# Model objects
+
+Here's an illustration of one of the available models.
+basilisk and reticulate are used together.  
+```{r ctmod}
+lungat = model_desc(mname="Human_Lung_Atlas.pkl")
+lungat
+names(lungat)
+```
+
+Typically we want to convert all python values to R
+values before returning from a basilisk call.  In this
+case, we return the live python object because
+it provides direct access to information about the
+model in use.
+
+

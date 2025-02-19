@@ -1,6 +1,6 @@
-Package: typist
+Package: typistR
 Title: use celltypist
-Version: 0.0.1
+Version: 0.0.2
 Authors@R:
     person(given = "Vince",
            family = "Carey",

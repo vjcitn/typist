@@ -21,10 +21,21 @@ ct_models = function() {
 #' and voting across clustering outcomes is used to assign cell type
 #' @return A SingleCellExperiment with additional colData columns `predicted_labels` and
 #' `conf_score` from celltypist
+#' @note The input is converted to AnnData h5ad by zellkonverter, and the output
+#' of celltypist prediction is bound to the h5ad, which is then converted back to SingleCellExperiment.
 #' @examples
 #' z = scRNAseq::ZilionisLungData()
-#' r = ct_run(z)
-#' names(r)
+#' kp = c("Ciliated cells", "Club cells", "Endothelial cells", "Fibroblasts")
+#' kpi = which(z$`Major cell type` %in% kp)
+#' zlim = z[, kpi]
+#' r = ct_run(zlim, model="Human_Lung_Atlas.pkl")
+#' r
+#' # examine details added on major cell types with celltypist
+#' tail(sort(table(r$`Major.cell.type`, r$predicted_labels)["Fibroblasts",]))
+#' tail(sort(table(r$`Major.cell.type`, r$predicted_labels)["Endothelial cells",]))
+#' # examine concordance between Zilionis minor subset and celltypist label
+#' tail(sort(table(r$`Minor.subset`, r$predicted_labels)["Endo1_PECAM1/CLEC14A/CD34",]))
+#' tail(sort(table(r$`Minor.subset`, r$predicted_labels)[,"EC general capillary"]))
 #' @export
 ct_run = function(sce, model='Immune_All_Low.pkl', majority_voting=FALSE) {
   message("checking for 0-count cells")

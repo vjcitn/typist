@@ -1,6 +1,6 @@
 
 bsklenv <- basilisk::BasiliskEnvironment(
-    pkgname="typist", envname="typist_env", packages="pandas==2.0.0",
+    pkgname="typistR", envname="typist_env", packages="pandas==2.0.0",
     pip=c("anndata==0.11.1", "celltypist==1.6.3"))
 
 #' Simple demonstration, not basilisk-compliant, but hands back python reference

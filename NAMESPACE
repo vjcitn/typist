@@ -3,6 +3,7 @@
 export(ct_models)
 export(ct_run)
 export(get_ct)
+export(model_desc)
 import(SingleCellExperiment)
 import(SummarizedExperiment)
 import(basilisk)
